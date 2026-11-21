@@ -11,24 +11,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -42,19 +32,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.campusconnect.presentation.auth.components.AuthGoogleButton
+import com.example.campusconnect.presentation.auth.components.AuthHeader
+import com.example.campusconnect.presentation.auth.components.AuthPrimaryButton
+import com.example.campusconnect.presentation.auth.components.AuthTextField
 import com.example.campusconnect.presentation.auth.viewmodel.AuthViewModel
 
 @Composable
 fun LoginScreen(
-    authViewModel : AuthViewModel,
-    onNavigateToRegister : () -> Unit,
+    authViewModel: AuthViewModel,
+    onNavigateToRegister: () -> Unit,
     onGoogleSignInClick: () -> Unit,
     onForgotPasswordClick: () -> Unit
 ) {
@@ -63,6 +54,7 @@ fun LoginScreen(
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
+
     var validationError by remember { mutableStateOf<String?>(null) }
 
     val errorMessage = validationError ?: uiState.errorMessage
@@ -88,43 +80,14 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Spacer(modifier = Modifier.height(24.dp))
 
-            // App branding
-            Surface(
-                shape = RoundedCornerShape(22.dp),
-                color = Color(0xFF4F46E5),
-                shadowElevation = 8.dp,
-                modifier = Modifier.size(76.dp)
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Text(
-                        text = "CC",
-                        color = Color.White,
-                        fontSize = 26.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = "Campus Connect",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF172554)
+            // Branding and heading
+            AuthHeader(
+                title = "Welcome back!",
+                subtitle = "Sign in to continue to your account."
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Your campus, connected.",
-                fontSize = 15.sp,
-                color = Color(0xFF64748B)
-            )
-
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(28.dp))
 
             // Login card
             Card(
@@ -143,103 +106,44 @@ fun LoginScreen(
                     modifier = Modifier.padding(24.dp),
                     verticalArrangement = Arrangement.spacedBy(18.dp)
                 ) {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
-                    ) {
-                        Text(
-                            text = "Welcome back!",
-                            fontSize = 23.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A)
-                        )
 
-                        Text(
-                            text = "Sign in to continue to your account.",
-                            fontSize = 14.sp,
-                            color = Color(0xFF64748B)
-                        )
-                    }
+                    Text(
+                        text = "Sign in",
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF0F172A)
+                    )
 
-                    // Email field
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Text(
-                            text = "Email address",
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 14.sp
-                        )
+                    // Email
+                    AuthTextField(
+                        label = "Email address",
+                        value = email,
+                        onValueChange = {
+                            email = it
+                            validationError = null
+                            authViewModel.clearError()
+                        },
+                        placeholder = "Enter your email",
+                        keyboardType = KeyboardType.Email
+                    )
 
-                        OutlinedTextField(
-                            value = email,
-                            onValueChange = {
-                                email = it
-                                validationError = null
-                                authViewModel.clearError()
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            placeholder = {
-                                Text("Enter your email")
-                            },
-                            singleLine = true,
-                            shape = RoundedCornerShape(14.dp),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Email,
-                                imeAction = ImeAction.Next
-                            )
-                        )
-                    }
-
-                    // Password field
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Text(
-                            text = "Password",
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 14.sp
-                        )
-
-                        OutlinedTextField(
-                            value = password,
-                            onValueChange = {
-                                password = it
-                                validationError = null
-                                authViewModel.clearError()
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            placeholder = {
-                                Text("Enter your password")
-                            },
-                            singleLine = true,
-                            shape = RoundedCornerShape(14.dp),
-                            visualTransformation = if (passwordVisible) {
-                                VisualTransformation.None
-                            } else {
-                                PasswordVisualTransformation()
-                            },
-                            trailingIcon = {
-                                TextButton(
-                                    onClick = {
-                                        passwordVisible = !passwordVisible
-                                    }
-                                ) {
-                                    Text(
-                                        if (passwordVisible) "Hide" else "Show"
-                                    )
-                                }
-                            },
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Password,
-                                imeAction = ImeAction.Done
-                            ),
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    // Login button performs validation.
-                                }
-                            )
-                        )
-                    }
+                    // Password
+                    AuthTextField(
+                        label = "Password",
+                        value = password,
+                        onValueChange = {
+                            password = it
+                            validationError = null
+                            authViewModel.clearError()
+                        },
+                        placeholder = "Enter your password",
+                        keyboardType = KeyboardType.Password,
+                        isPassword = true,
+                        passwordVisible = passwordVisible,
+                        onPasswordVisibilityChange = {
+                            passwordVisible = !passwordVisible
+                        }
+                    )
 
                     // Forgot password
                     Box(
@@ -267,7 +171,9 @@ fun LoginScreen(
                     }
 
                     // Login button
-                    Button(
+                    AuthPrimaryButton(
+                        text = "Sign In",
+                        isLoading = uiState.isLoginLoading,
                         onClick = {
                             validationError = when {
                                 email.isBlank() ->
@@ -290,32 +196,10 @@ fun LoginScreen(
                                     password = password
                                 )
                             }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(54.dp),
-                        enabled = !uiState.isLoginLoading,
-                        shape = RoundedCornerShape(14.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF4F46E5)
-                        )
-                    ) {
-                        if (uiState.isLoginLoading) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(22.dp),
-                                color = Color.White,
-                                strokeWidth = 2.dp
-                            )
-                        } else {
-                            Text(
-                                text = "Sign In",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )
                         }
-                    }
+                    )
 
-                    // Divider
+                    // OR divider
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
@@ -337,36 +221,11 @@ fun LoginScreen(
                         )
                     }
 
-                    // Google sign-in
-                    OutlinedButton(
-                        onClick = onGoogleSignInClick,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(54.dp),
-                        enabled = !uiState.isGoogleLoading,
-                        shape = RoundedCornerShape(14.dp)
-                    ) {
-                        if (uiState.isGoogleLoading) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(20.dp),
-                                strokeWidth = 2.dp
-                            )
-                        } else {
-                            Text(
-                                text = "G",
-                                fontSize = 19.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFF4285F4)
-                            )
-
-                            Spacer(modifier = Modifier.width(12.dp))
-
-                            Text(
-                                text = "Continue with Google",
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
-                    }
+                    // Google Sign-In
+                    AuthGoogleButton(
+                        isLoading = uiState.isGoogleLoading,
+                        onClick = onGoogleSignInClick
+                    )
                 }
             }
 
@@ -378,7 +237,7 @@ fun LoginScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Don't have an account? ",
+                    text = "Don't have an account?",
                     color = Color(0xFF64748B),
                     fontSize = 14.sp
                 )
