@@ -25,7 +25,9 @@ fun AuthNavigation(
                 authViewModel = authViewModel,
                 onNavigateToRegister = {
                     navController.navigate(RegisterRoute)
-                }
+                },
+                onGoogleSignInClick = {},
+                onForgotPasswordClick = {}
             )
         }
 
