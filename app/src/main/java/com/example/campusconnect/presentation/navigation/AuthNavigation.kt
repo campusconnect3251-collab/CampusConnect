@@ -6,21 +6,36 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.campusconnect.presentation.auth.LoginScreen
 import com.example.campusconnect.presentation.auth.RegisterScreen
+import com.example.campusconnect.presentation.auth.viewmodel.AuthViewModel
+import com.example.campusconnect.presentation.navigation.routes.LoginRoute
+import com.example.campusconnect.presentation.navigation.routes.RegisterRoute
 
 @Composable
-fun AuthNavigation() {
+fun AuthNavigation(
+    authViewModel: AuthViewModel
+) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
         startDestination = LoginRoute
-    ){
+    ) {
         composable<LoginRoute> {
-            LoginScreen()
+            LoginScreen(
+                authViewModel = authViewModel,
+                onNavigateToRegister = {
+                    navController.navigate(RegisterRoute)
+                }
+            )
         }
 
-        composable<RegisterRoute>{
-            RegisterScreen()
+        composable<RegisterRoute> {
+            RegisterScreen(
+                authViewModel = authViewModel,
+                onNavigateToLogin = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
