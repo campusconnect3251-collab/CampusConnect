@@ -1,4 +1,4 @@
-package com.example.campusconnect.presentation.auth
+package com.example.campusconnect.presentation.auth.login
 
 import android.util.Patterns
 import androidx.compose.foundation.background
@@ -46,11 +46,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.campusconnect.presentation.auth.viewmodel.AuthViewModel
 
 @Composable

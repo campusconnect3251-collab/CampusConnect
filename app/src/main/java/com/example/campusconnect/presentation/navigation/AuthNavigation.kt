@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.campusconnect.presentation.auth.LoginScreen
-import com.example.campusconnect.presentation.auth.RegisterScreen
+import com.example.campusconnect.presentation.auth.login.LoginScreen
+import com.example.campusconnect.presentation.auth.register.RegisterScreen
 import com.example.campusconnect.presentation.auth.viewmodel.AuthViewModel
 import com.example.campusconnect.presentation.navigation.routes.LoginRoute
 import com.example.campusconnect.presentation.navigation.routes.RegisterRoute
@@ -26,8 +26,12 @@ fun AuthNavigation(
                 onNavigateToRegister = {
                     navController.navigate(RegisterRoute)
                 },
-                onGoogleSignInClick = {},
-                onForgotPasswordClick = {}
+                onGoogleSignInClick = {
+                    // todo connect Google Credential Manager here.
+                },
+                onForgotPasswordClick = {
+                    // todo implement password recovery later.
+                }
             )
         }
 
@@ -36,6 +40,9 @@ fun AuthNavigation(
                 authViewModel = authViewModel,
                 onNavigateToLogin = {
                     navController.popBackStack()
+                },
+                onGoogleSignInClick = {
+                    // todo Connect Google Sign-In here.
                 }
             )
         }
