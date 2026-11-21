@@ -69,8 +69,6 @@ class FirebaseAuthDataSource @Inject constructor(
 
         firebaseAuth.addAuthStateListener(listener)
 
-        trySend(firebaseAuth.currentUser)
-
         awaitClose {
             firebaseAuth.removeAuthStateListener(listener)
         }
