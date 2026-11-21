@@ -26,9 +26,6 @@ fun AuthNavigation(
                 onNavigateToRegister = {
                     navController.navigate(RegisterRoute)
                 },
-                onGoogleSignInClick = {
-                    // todo connect Google Credential Manager here.
-                },
                 onForgotPasswordClick = {
                     // todo implement password recovery later.
                 }
@@ -40,9 +37,6 @@ fun AuthNavigation(
                 authViewModel = authViewModel,
                 onNavigateToLogin = {
                     navController.popBackStack()
-                },
-                onGoogleSignInClick = {
-                    // todo Connect Google Sign-In here.
                 }
             )
         }

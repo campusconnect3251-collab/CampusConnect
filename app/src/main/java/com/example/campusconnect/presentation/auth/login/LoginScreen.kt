@@ -46,7 +46,6 @@ import com.example.campusconnect.presentation.auth.viewmodel.AuthViewModel
 fun LoginScreen(
     authViewModel: AuthViewModel,
     onNavigateToRegister: () -> Unit,
-    onGoogleSignInClick: () -> Unit,
     onForgotPasswordClick: () -> Unit
 ) {
     val uiState by authViewModel.uiState.collectAsStateWithLifecycle()
@@ -56,8 +55,9 @@ fun LoginScreen(
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
     var validationError by remember { mutableStateOf<String?>(null) }
+    var googleError by remember { mutableStateOf<String?>(null) }
 
-    val errorMessage = validationError ?: uiState.errorMessage
+    val errorMessage = validationError ?: googleError ?: uiState.errorMessage
 
     Box(
         modifier = Modifier
@@ -223,8 +223,14 @@ fun LoginScreen(
 
                     // Google Sign-In
                     AuthGoogleButton(
-                        isLoading = uiState.isGoogleLoading,
-                        onClick = onGoogleSignInClick
+                        onIdTokenReceived = { idToken ->
+                            googleError = null
+                            authViewModel.signInWithGoogle(idToken)
+                        },
+                        onError = { message ->
+                            googleError = message
+                        },
+                        isFirebaseLoading = uiState.isGoogleLoading
                     )
                 }
             }

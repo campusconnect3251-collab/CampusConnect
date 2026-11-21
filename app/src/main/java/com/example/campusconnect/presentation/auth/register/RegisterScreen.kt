@@ -28,8 +28,7 @@ import com.example.campusconnect.presentation.auth.components.AuthTextField
 @Composable
 fun RegisterScreen(
     authViewModel: AuthViewModel,
-    onNavigateToLogin: () -> Unit,
-    onGoogleSignInClick: () -> Unit
+    onNavigateToLogin: () -> Unit
 ) {
     val uiState by authViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -42,7 +41,9 @@ fun RegisterScreen(
 
     var validationError by remember { mutableStateOf<String?>(null) }
 
-    val errorMessage = validationError ?: uiState.errorMessage
+    var googleError by remember { mutableStateOf<String?>(null) }
+
+    val errorMessage = validationError ?: googleError ?: uiState.errorMessage
 
     Box(
         modifier = Modifier
@@ -209,8 +210,14 @@ fun RegisterScreen(
                     }
 
                     AuthGoogleButton(
-                        isLoading = uiState.isGoogleLoading,
-                        onClick = onGoogleSignInClick
+                        onIdTokenReceived = { idToken ->
+                            googleError = null
+                            authViewModel.signInWithGoogle(idToken)
+                        },
+                        onError = { message ->
+                            googleError = message
+                        },
+                        isFirebaseLoading = uiState.isGoogleLoading
                     )
                 }
             }
