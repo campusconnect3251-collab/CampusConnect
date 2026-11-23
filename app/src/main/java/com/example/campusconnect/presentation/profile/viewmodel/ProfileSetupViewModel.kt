@@ -1,6 +1,7 @@
 package com.example.campusconnect.presentation.profile.viewmodel
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -142,6 +143,7 @@ class ProfileSetupViewModel @Inject constructor(
 
             createProfileUseCase(profile)
                 .onSuccess {
+                    Log.d("ProfileSetup", "Profile saved successfully: ${profile.uid}")
                     _uiState.update {
                         it.copy(
                             isLoading = false,
@@ -150,6 +152,7 @@ class ProfileSetupViewModel @Inject constructor(
                     }
                 }
                 .onFailure { exception ->
+                    Log.e("ProfileSetup", "Profile save failed", exception)
                     _uiState.update {
                         it.copy(
                             isLoading = false,

@@ -1,5 +1,6 @@
 package com.example.campusconnect.presentation.auth.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.campusconnect.domain.usecase.auth.LoginWithEmailUseCase
@@ -7,14 +8,18 @@ import com.example.campusconnect.domain.usecase.auth.ObserveAuthStateUseCase
 import com.example.campusconnect.domain.usecase.auth.RegisterWithEmailUseCase
 import com.example.campusconnect.domain.usecase.auth.SignInWithGoogleUseCase
 import com.example.campusconnect.domain.usecase.auth.SignOutUseCase
+import com.example.campusconnect.domain.usecase.profile.ObserveUserProfileUseCase
 import com.example.campusconnect.presentation.auth.state.AuthState
 import com.example.campusconnect.presentation.auth.state.AuthUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -22,7 +27,8 @@ class AuthViewModel @Inject constructor(
     private val loginWithEmailUseCase: LoginWithEmailUseCase,
     private val signInWithGoogleUseCase: SignInWithGoogleUseCase,
     private val signOutUseCase: SignOutUseCase,
-    private val observeAuthStateUseCase: ObserveAuthStateUseCase
+    private val observeAuthStateUseCase: ObserveAuthStateUseCase,
+    private val observeUserProfileUseCase: ObserveUserProfileUseCase
 ) : ViewModel() {
 
     // Overall authentication state
@@ -34,18 +40,50 @@ class AuthViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
+        Log.d("AuthViewModel", "AuthViewModel initialized")
         observeAuthState()
     }
 
     private fun observeAuthState() {
         viewModelScope.launch {
-            observeAuthStateUseCase().collect { user ->
-                _authState.value = if (user != null) {
-                    AuthState.Authenticated(user)
-                } else {
-                    AuthState.Unauthenticated
+            observeAuthStateUseCase()
+                .collectLatest { user ->
+                    Log.d("AuthViewModel", "Auth user UID: ${user?.uid}")
+                    if (user == null) {
+                        _authState.value = AuthState.Unauthenticated
+                        return@collectLatest
+                    }
+
+                    // User is authenticated. Now check their profile.
+                    _authState.value = AuthState.Loading
+
+                    observeUserProfileUseCase(user.uid)
+                        .catch { exception ->
+                            Log.e("AuthViewModel", "Profile observation failed", exception)
+                            if (exception is CancellationException) {
+                                throw exception
+                            }
+
+                            _authState.value =
+                                AuthState.ProfileCheckFailed(
+                                    user = user,
+                                    message = exception.localizedMessage
+                                        ?: "Unable to check your profile."
+                                )
+                        }
+                        .collect { profile ->
+                            Log.d("AuthViewModel", "Observed profile: $profile")
+                            _authState.value = if (profile == null) {
+                                Log.d("AuthViewModel", "Profile setup required")
+                                AuthState.ProfileSetupRequired(user)
+                            } else {
+                                AuthState.Authenticated(
+                                    user = user,
+                                    profile = profile
+                                )
+                            }
+                        }
                 }
-            }
         }
     }
 
