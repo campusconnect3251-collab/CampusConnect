@@ -16,22 +16,12 @@ class GoogleSignInClient(
         CredentialManager.create(context)
 
     suspend fun getGoogleIdToken(): String {
-        val response = try {
-            credentialManager.getCredential(
-                context = context,
-                request = createRequest(
-                    filterAuthorizedAccounts = true
-                )
+        val response = credentialManager.getCredential(
+            context = context,
+            request = createRequest(
+                filterAuthorizedAccounts = false
             )
-        } catch (e: NoCredentialException) {
-            // No previously authorized account: allow other Google accounts.
-            credentialManager.getCredential(
-                context = context,
-                request = createRequest(
-                    filterAuthorizedAccounts = false
-                )
-            )
-        }
+        )
 
         val credential = response.credential
 
