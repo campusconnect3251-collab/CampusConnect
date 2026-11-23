@@ -1,7 +1,6 @@
 package com.example.campusconnect.domain.model
 
-import kotlin.time.Instant
-
+import java.time.Instant
 
 data class UserProfile(
     // Basic identity
