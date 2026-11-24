@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import com.example.campusconnect.data.datasource.remote.FirebaseUserProfileDataSource
 import com.example.campusconnect.data.mapper.toDomain
 import com.example.campusconnect.data.mapper.toDto
+import com.example.campusconnect.data.mapper.toPrivateDto
 import com.example.campusconnect.domain.model.UserProfile
 import com.example.campusconnect.domain.repo.UserProfileRepository
 import com.example.campusconnect.util.safeCall
@@ -20,7 +21,10 @@ class UserProfileRepositoryImpl @Inject constructor(
     override suspend fun createProfile(
         profile: UserProfile
     ): Result<Unit> = safeCall {
-        dataSource.createProfile(profile.toDto())
+        dataSource.createProfile(
+            profile = profile.toDto(),
+            privateProfile = profile.toPrivateDto()
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -42,7 +46,16 @@ class UserProfileRepositoryImpl @Inject constructor(
     override suspend fun updateProfile(
         profile: UserProfile
     ): Result<Unit> = safeCall {
-        dataSource.updateProfile(profile.toDto())
+        dataSource.updateProfile(
+            profile = profile.toDto(),
+            privateProfile = profile.toPrivateDto()
+        )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun observeUsers(
+        currentUserId: String
+    ): Flow<List<UserProfile>> {
+        return dataSource.observeUsers(currentUserId)
+    }
 }

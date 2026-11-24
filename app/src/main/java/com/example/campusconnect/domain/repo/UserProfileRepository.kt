@@ -20,4 +20,8 @@ interface UserProfileRepository {
     suspend fun updateProfile(
         profile: UserProfile
     ): Result<Unit>
+
+    fun observeUsers(
+        currentUserId: String
+    ): Flow<List<UserProfile>>
 }
