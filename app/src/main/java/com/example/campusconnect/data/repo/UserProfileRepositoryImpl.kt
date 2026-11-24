@@ -7,10 +7,10 @@ import com.example.campusconnect.data.mapper.toDomain
 import com.example.campusconnect.data.mapper.toDto
 import com.example.campusconnect.domain.model.UserProfile
 import com.example.campusconnect.domain.repo.UserProfileRepository
+import com.example.campusconnect.util.safeCall
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.coroutines.cancellation.CancellationException
 
 class UserProfileRepositoryImpl @Inject constructor(
     private val dataSource: FirebaseUserProfileDataSource
@@ -23,12 +23,14 @@ class UserProfileRepositoryImpl @Inject constructor(
         dataSource.createProfile(profile.toDto())
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getProfile(
         uid: String
     ): Result<UserProfile?> = safeCall {
         dataSource.getProfile(uid)?.toDomain()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun observeProfile(
         uid: String
     ): Flow<UserProfile?> {
@@ -43,15 +45,4 @@ class UserProfileRepositoryImpl @Inject constructor(
         dataSource.updateProfile(profile.toDto())
     }
 
-    private suspend fun <T> safeCall(
-        block: suspend () -> T
-    ): Result<T> {
-        return try {
-            Result.success(block())
-        } catch (e: CancellationException) {
-            throw e
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
 }
