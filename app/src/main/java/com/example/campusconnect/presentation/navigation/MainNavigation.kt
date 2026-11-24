@@ -53,7 +53,10 @@ fun MainNavigation(){
 
             ChatScreen(
                 chatId = route.chatId,
-                otherUserId = route.otherUserId
+                otherUserId = route.otherUserId,
+                onBackClick = {
+                    navController.navigateUp()
+                }
             )
         }
     }
