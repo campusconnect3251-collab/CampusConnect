@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.campusconnect.presentation.chat.screen.ChatScreen
-import com.example.campusconnect.presentation.home.HomeScreen
+import com.example.campusconnect.presentation.home.screen.HomeScreen
 import com.example.campusconnect.presentation.navigation.routes.ChatRoute
 import com.example.campusconnect.presentation.navigation.routes.HomeRoute
 import com.example.campusconnect.presentation.navigation.routes.PeopleRoute
@@ -28,6 +28,14 @@ fun MainNavigation(){
                     navController.navigate(PeopleRoute) {
                         launchSingleTop = true
                     }
+                },
+                onChatSelected = { chatId, otherUserId ->
+                    navController.navigate(
+                        ChatRoute(
+                            chatId = chatId,
+                            otherUserId = otherUserId
+                        )
+                    )
                 }
             )
         }
