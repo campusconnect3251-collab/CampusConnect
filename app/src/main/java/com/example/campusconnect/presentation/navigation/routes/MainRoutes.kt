@@ -9,6 +9,9 @@ object HomeRoute
 object PeopleRoute
 
 @Serializable
+object ChatsRoute
+
+@Serializable
 data class ChatRoute(
     val chatId : String,
     val otherUserId : String

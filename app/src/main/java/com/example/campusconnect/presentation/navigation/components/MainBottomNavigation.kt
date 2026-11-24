@@ -1,4 +1,4 @@
-package com.example.campusconnect.presentation.home.components
+package com.example.campusconnect.presentation.navigation.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.campusconnect.ui.theme.CampusColors
 
-enum class HomeBottomTab {
+enum class MainTab {
     HOME,
     CHATS,
     CAMPUS,
@@ -27,16 +27,16 @@ enum class HomeBottomTab {
 }
 
 @Composable
-fun HomeBottomNavigation(
-    selectedTab: HomeBottomTab,
-    onTabSelected: (HomeBottomTab) -> Unit
+fun MainBottomNavigation(
+    selectedTab: MainTab,
+    onTabSelected: (MainTab) -> Unit
 ) {
     val tabs = listOf(
-        Triple(HomeBottomTab.HOME, "Home", Icons.Outlined.Home),
-        Triple(HomeBottomTab.CHATS, "Chats", Icons.Outlined.ChatBubbleOutline),
-        Triple(HomeBottomTab.CAMPUS, "Campus", Icons.Outlined.School),
-        Triple(HomeBottomTab.COMMUNITIES, "Communities", Icons.Outlined.Groups),
-        Triple(HomeBottomTab.PROFILE, "Profile", Icons.Outlined.PersonOutline)
+        Triple(MainTab.HOME, "Home", Icons.Outlined.Home),
+        Triple(MainTab.CHATS, "Chats", Icons.Outlined.ChatBubbleOutline),
+        Triple(MainTab.CAMPUS, "Campus", Icons.Outlined.School),
+        Triple(MainTab.COMMUNITIES, "Communities", Icons.Outlined.Groups),
+        Triple(MainTab.PROFILE, "Profile", Icons.Outlined.PersonOutline)
     )
 
     NavigationBar(
@@ -45,7 +45,6 @@ fun HomeBottomNavigation(
         contentColor = CampusColors.TextPrimary
     ) {
         tabs.forEach { (tab, label, icon) ->
-
             NavigationBarItem(
                 selected = selectedTab == tab,
                 onClick = { onTabSelected(tab) },

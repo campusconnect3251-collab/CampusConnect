@@ -14,8 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.example.campusconnect.presentation.home.components.HomeBottomNavigation
-import com.example.campusconnect.presentation.home.components.HomeBottomTab
 import com.example.campusconnect.presentation.home.components.HomeComingUp
 import com.example.campusconnect.presentation.home.components.HomeHeader
 import com.example.campusconnect.presentation.home.components.HomeNoticeBoard
@@ -35,22 +33,7 @@ fun HomeScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
-        containerColor = CampusColors.Background,
-        bottomBar = {
-            HomeBottomNavigation(
-                selectedTab = HomeBottomTab.HOME,
-                onTabSelected = { tab ->
-                    when (tab) {
-                        //todo add navigation functionalities to each navigation bar item
-                        HomeBottomTab.HOME -> Unit
-                        HomeBottomTab.CHATS -> onPeopleClick()
-                        HomeBottomTab.CAMPUS -> Unit
-                        HomeBottomTab.COMMUNITIES -> Unit
-                        HomeBottomTab.PROFILE -> Unit
-                    }
-                }
-            )
-        }
+        containerColor = CampusColors.Background
     ) { paddingValues ->
 
         LazyColumn(
