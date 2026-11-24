@@ -3,7 +3,13 @@ package com.example.campusconnect.presentation.navigation.routes
 import kotlinx.serialization.Serializable
 
 @Serializable
-object ProfileSetupRoute
+object HomeRoute
 
 @Serializable
-object HomeRoute
+object PeopleRoute
+
+@Serializable
+data class ChatRoute(
+    val chatId : String,
+    val otherUserId : String
+)
