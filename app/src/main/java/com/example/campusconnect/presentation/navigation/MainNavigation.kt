@@ -18,6 +18,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.campusconnect.presentation.chat.screen.ChatScreen
+import com.example.campusconnect.presentation.chats.screen.ChatsScreen
 import com.example.campusconnect.presentation.home.screen.HomeScreen
 import com.example.campusconnect.presentation.navigation.components.MainBottomNavigation
 import com.example.campusconnect.presentation.navigation.components.MainTab
@@ -114,13 +115,21 @@ fun MainNavigation() {
             }
 
             composable<ChatsRoute> {
-                // Temporary screen. We will replace this with ChatsScreen.
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = "Chats screen will be built next")
-                }
+                ChatsScreen(
+                    onNewChatClick = {
+                        navController.navigate(PeopleRoute) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onChatClick = { chatId, otherUserId ->
+                        navController.navigate(
+                            ChatRoute(
+                                chatId = chatId,
+                                otherUserId = otherUserId
+                            )
+                        )
+                    }
+                )
             }
 
             composable<PeopleRoute> {
