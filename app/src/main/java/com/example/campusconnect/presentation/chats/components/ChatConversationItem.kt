@@ -102,7 +102,7 @@ fun ChatConversationItem(
     HorizontalDivider(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
         thickness = 1.dp,
-        color = CampusColors.Primary
+        color = CampusColors.FieldBorder
     )
 }
 

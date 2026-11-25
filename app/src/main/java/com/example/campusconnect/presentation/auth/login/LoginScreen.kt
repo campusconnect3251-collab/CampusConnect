@@ -41,6 +41,7 @@ import com.example.campusconnect.presentation.auth.components.AuthHeader
 import com.example.campusconnect.presentation.auth.components.AuthPrimaryButton
 import com.example.campusconnect.presentation.auth.components.AuthTextField
 import com.example.campusconnect.presentation.auth.viewmodel.AuthViewModel
+import com.example.campusconnect.ui.theme.CampusColors
 
 @Composable
 fun LoginScreen(
@@ -65,9 +66,9 @@ fun LoginScreen(
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFFEEF2FF),
-                        Color(0xFFF8FAFC),
-                        Color.White
+                        CampusColors.Background,
+                        CampusColors.Background,
+                        CampusColors.White
                     )
                 )
             )
@@ -96,7 +97,7 @@ fun LoginScreen(
                     .widthIn(max = 460.dp),
                 shape = RoundedCornerShape(28.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color.White
+                    containerColor = CampusColors.White
                 ),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 6.dp
@@ -111,7 +112,7 @@ fun LoginScreen(
                         text = "Sign in",
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0F172A)
+                        color = CampusColors.TextPrimary
                     )
 
                     // Email
@@ -155,7 +156,7 @@ fun LoginScreen(
                         ) {
                             Text(
                                 text = "Forgot password?",
-                                color = Color(0xFF4F46E5),
+                                color = CampusColors.Primary,
                                 fontWeight = FontWeight.SemiBold
                             )
                         }
@@ -165,7 +166,7 @@ fun LoginScreen(
                     if (errorMessage != null) {
                         Text(
                             text = errorMessage,
-                            color = MaterialTheme.colorScheme.error,
+                            color = CampusColors.Error,
                             fontSize = 13.sp
                         )
                     }
@@ -206,18 +207,18 @@ fun LoginScreen(
                     ) {
                         HorizontalDivider(
                             modifier = Modifier.weight(1f),
-                            color = Color(0xFFE2E8F0)
+                            color = CampusColors.FieldBorder
                         )
 
                         Text(
                             text = "  OR  ",
-                            color = Color(0xFF94A3B8),
+                            color = CampusColors.TextSecondary,
                             fontSize = 12.sp
                         )
 
                         HorizontalDivider(
                             modifier = Modifier.weight(1f),
-                            color = Color(0xFFE2E8F0)
+                            color = CampusColors.FieldBorder
                         )
                     }
 
@@ -253,7 +254,7 @@ fun LoginScreen(
                 ) {
                     Text(
                         text = "Create account",
-                        color = Color(0xFF4F46E5),
+                        color = CampusColors.Primary,
                         fontWeight = FontWeight.Bold
                     )
                 }

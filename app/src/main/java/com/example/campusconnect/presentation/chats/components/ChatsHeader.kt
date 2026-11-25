@@ -36,20 +36,20 @@ fun ChatsHeader(
             color = CampusColors.TextPrimary
         )
 
-        Box(
-            modifier = Modifier
-                .size(44.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .background(CampusColors.Primary)
-                .clickable(onClick = onNewChatClick),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = "New chat",
-                tint = CampusColors.White,
-                modifier = Modifier.size(24.dp)
-            )
-        }
+//        Box(
+//            modifier = Modifier
+//                .size(44.dp)
+//                .clip(RoundedCornerShape(12.dp))
+//                .background(CampusColors.Primary)
+//                .clickable(onClick = onNewChatClick),
+//            contentAlignment = Alignment.Center
+//        ) {
+//            Icon(
+//                imageVector = Icons.Default.Add,
+//                contentDescription = "New chat",
+//                tint = CampusColors.White,
+//                modifier = Modifier.size(24.dp)
+//            )
+//        }
     }
 }

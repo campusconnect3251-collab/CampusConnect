@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.campusconnect.ui.theme.CampusColors
 
 
 @Composable
@@ -34,7 +36,8 @@ fun AuthTextField(
         Text(
             text = label,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 14.sp
+            fontSize = 14.sp,
+            color = CampusColors.TextPrimary
         )
 
         Spacer(Modifier.height(8.dp))
@@ -49,6 +52,17 @@ fun AuthTextField(
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType
             ),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = CampusColors.Primary,
+                unfocusedBorderColor = CampusColors.FieldBorder,
+                focusedLabelColor = CampusColors.Primary,
+                unfocusedLabelColor = CampusColors.TextSecondary,
+                cursorColor = CampusColors.Primary,
+                focusedTextColor = CampusColors.TextPrimary,
+                unfocusedTextColor = CampusColors.TextPrimary,
+                focusedPlaceholderColor = CampusColors.TextSecondary,
+                unfocusedPlaceholderColor = CampusColors.TextSecondary
+            ),
             visualTransformation = if (isPassword && !passwordVisible) {
                 PasswordVisualTransformation()
             } else {
@@ -57,7 +71,10 @@ fun AuthTextField(
             trailingIcon = if (isPassword && onPasswordVisibilityChange != null) {
                 {
                     TextButton(onClick = onPasswordVisibilityChange) {
-                        Text(if (passwordVisible) "Hide" else "Show")
+                        Text(
+                            text = if (passwordVisible) "Hide" else "Show",
+                            color = CampusColors.TextSecondary
+                        )
                     }
                 }
             } else {

@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.campusconnect.ui.theme.CampusColors
 
 @Composable
 fun AuthPrimaryButton(
@@ -29,7 +30,8 @@ fun AuthPrimaryButton(
         enabled = enabled && !isLoading,
         shape = RoundedCornerShape(14.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFF4F46E5)
+            containerColor = CampusColors.Primary,
+            contentColor = CampusColors.White
         )
     ) {
         if (isLoading) {

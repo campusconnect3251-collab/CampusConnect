@@ -24,6 +24,7 @@ import com.example.campusconnect.presentation.auth.components.AuthGoogleButton
 import com.example.campusconnect.presentation.auth.components.AuthHeader
 import com.example.campusconnect.presentation.auth.components.AuthPrimaryButton
 import com.example.campusconnect.presentation.auth.components.AuthTextField
+import com.example.campusconnect.ui.theme.CampusColors
 
 @Composable
 fun RegisterScreen(
@@ -51,9 +52,9 @@ fun RegisterScreen(
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFFEEF2FF),
-                        Color(0xFFF8FAFC),
-                        Color.White
+                        CampusColors.Background,
+                        CampusColors.Background,
+                        CampusColors.White
                     )
                 )
             )
@@ -93,7 +94,7 @@ fun RegisterScreen(
                         text = "Get started",
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0F172A)
+                        color = CampusColors.TextPrimary
                     )
 
                     AuthTextField(
@@ -146,7 +147,7 @@ fun RegisterScreen(
                     if (errorMessage != null) {
                         Text(
                             text = errorMessage,
-                            color = MaterialTheme.colorScheme.error,
+                            color = CampusColors.Error,
                             fontSize = 13.sp
                         )
                     }
@@ -194,18 +195,18 @@ fun RegisterScreen(
                     ) {
                         HorizontalDivider(
                             modifier = Modifier.weight(1f),
-                            color = Color(0xFFE2E8F0)
+                            color = CampusColors.FieldBorder
                         )
 
                         Text(
                             text = "  OR  ",
-                            color = Color(0xFF94A3B8),
+                            color = CampusColors.TextSecondary,
                             fontSize = 12.sp
                         )
 
                         HorizontalDivider(
                             modifier = Modifier.weight(1f),
-                            color = Color(0xFFE2E8F0)
+                            color = CampusColors.FieldBorder
                         )
                     }
 
@@ -229,7 +230,7 @@ fun RegisterScreen(
             ) {
                 Text(
                     text = "Already have an account?",
-                    color = Color(0xFF64748B),
+                    color = CampusColors.Primary,
                     fontSize = 14.sp
                 )
 
@@ -238,7 +239,7 @@ fun RegisterScreen(
                 ) {
                     Text(
                         text = "Sign in",
-                        color = Color(0xFF4F46E5),
+                        color = CampusColors.Primary,
                         fontWeight = FontWeight.Bold
                     )
                 }

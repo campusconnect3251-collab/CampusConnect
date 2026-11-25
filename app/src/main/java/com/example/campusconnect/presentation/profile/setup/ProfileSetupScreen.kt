@@ -167,12 +167,12 @@ fun ProfileSetupScreen(
                     )
                 }
                 // todo remove section field
-                ProfileInputField(
-                    label = "Section (optional)",
-                    value = uiState.section,
-                    onValueChange = viewModel::onSectionChange,
-                    placeholder = "e.g. A"
-                )
+//                ProfileInputField(
+//                    label = "Section (optional)",
+//                    value = uiState.section,
+//                    onValueChange = viewModel::onSectionChange,
+//                    placeholder = "e.g. A"
+//                )
             }
 
             // Error message

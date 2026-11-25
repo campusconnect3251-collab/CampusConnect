@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.campusconnect.ui.theme.CampusColors
 
 @Composable
 fun AuthHeader(
@@ -36,8 +37,8 @@ fun AuthHeader(
                 modifier = Modifier.background(
                     Brush.linearGradient(
                         colors = listOf(
-                            Color(0xFF6366F1),
-                            Color(0xFF4338CA)
+                            CampusColors.Primary,
+                            CampusColors.PrimaryDark
                         )
                     )
                 ),
@@ -58,7 +59,7 @@ fun AuthHeader(
             text = "Campus Connect",
             fontSize = 27.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF172554)
+            color = CampusColors.PrimaryDark
         )
 
         Spacer(Modifier.height(8.dp))
@@ -67,7 +68,7 @@ fun AuthHeader(
             text = title,
             fontSize = 21.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Color(0xFF0F172A)
+            color = CampusColors.TextPrimary
         )
 
         Spacer(Modifier.height(6.dp))
@@ -75,7 +76,7 @@ fun AuthHeader(
         Text(
             text = subtitle,
             fontSize = 14.sp,
-            color = Color(0xFF64748B)
+            color = CampusColors.TextSecondary
         )
     }
 }
